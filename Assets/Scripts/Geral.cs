@@ -24,7 +24,7 @@ public class Geral : MonoBehaviour
 
     bool fog = false; //variable to control if the fog is on or off
     float fogDensity = 0.1f; // control fog density
-    float poisonDensity = 0.1f; //control fog density when it is poison 
+    //float poisonDensity = 0.1f; //control fog density when it is poison 
     Color fogColor = new Color (0.5f, 0.5f, 0.5f, 1f); //variable color to keep the fog color for when we want to turn fog on
     Color poisonColor = new Color(0.7f, 0.5f, 0.3f, 1f); //variable colour to keep the color for the poison to be when released
     float poisonTime = 0f; //variable to count the tima that has passed since poison has been realesed
