@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
     //WINNING
     bool hasAntidote = false; //variable to control if the player has the antidote yet
     [SerializeField]
-    int antidotesNeeded =3;
+    int antidotesNeeded =1;
     int antidotesOwned = 0;
 
     //FOG

@@ -29,13 +29,17 @@ public class Geral : MonoBehaviour
     [SerializeField]
     GameObject debris;
     [SerializeField]
-    Transform[] debrisCoordinates;// create empty game objects as coordinates and place in array
-    int debrisAmount = 5; //number of debris
+    //Transform[] debrisCoordinates = new Transform[5];// create empty game objects as coordinates and place in array
+    //int debrisAmount = 5; //number of debris
     private void Start()
     {
         pauseScreen.gameObject.SetActive(false); //hides the pause screen 
         Time.timeScale = 1f; //start time
 
+        //for(int i=0; i==debrisAmount; i++) 
+        //{
+          //  Instantiate(debris, debrisCoordinates[i].position, Quaternion.identity); //instatiate each debris at start of the game 
+        //}
         //Instantiate(debris, debrisCoordinates.position, Quaternion.identity); //create a for cycle to instatiate each debris in postion 
     }
 
