@@ -3,7 +3,22 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PoisonousPlant
+  - WeaponPart
+  - DoorExit
+  - Debris
+  - HealthKit
+  - PortalZAxis
+  - Set
+  - Exit
+  - Portal180
+  - Ammo
+  - FlashLight
+  - Enemy
+  - Antidote
+  - PoisonRobot
+  - Fog
   layers:
   - Default
   - TransparentFX

@@ -19,11 +19,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject playerSlingshot; // game object of the slingshot. to show and hide
     [SerializeField]
+    GameObject elasticLong; //game object of the slingshot's elastic to show when aiming
+    [SerializeField]
+    GameObject elasticShort; //game object of the slingshot's elastic to show when reloading
+    [SerializeField]
     private int weaponPart = 0; //variable to control the number of parts of the sling shot the player has 
     [SerializeField]
     GameObject playerAmmo; //what the player fires
     [SerializeField]
-    private float fireRate = 0.5f; //rate thst the player can fire at
+    private float fireRate = 1f; //rate thst the player can fire at, time to reload
     private float timeBetweenShots;
     private bool playerHAsWeapon = false; //check if the player has all the parts and can use the weapon       
     private bool canFire = true; //player can fire if it's been more than fireRate seconds since last shot
@@ -35,20 +39,34 @@ public class Player : MonoBehaviour
     GameObject flashlight; //player's flashlight
     bool flashlightOn = false;
 
-    //Win the Game
+    //WINNING
     bool hasAntidote = false; //variable to control if the player has the antidote yet
     [SerializeField]
     int antidotesNeeded =3;
     int antidotesOwned = 0;
+
+    //FOG
+    private bool fog = true; //variable to control if the fog is on or off
+    private float fogDensity = 0.1f; // control fog density
+    private Color fogColor = new Color(0.5f, 0.5f, 0.5f, 1f); //variable color to keep the fog color for when we want to turn fog on adapted from https://docs.unity3d.com/ScriptReference/Color.html
+
 
     private void Start()
     {
         pickUpPrompt.gameObject.SetActive(false); //hide pick up prompt
         aimPlayer.gameObject.SetActive(false); //hide aim  
         flashlight.gameObject.SetActive(false); //turn off flashlight
-        GameObject.FindGameObjectWithTag("DoorExit").SetActive(true);//show exit game object so player can't escape the labyrinth without the labyrinth
+        GameObject.FindGameObjectWithTag("DoorExit").SetActive(true);//show exit game object so player can't escape the labyrinth without the antidote
         playerSlingshot.gameObject.SetActive(false); //hide slingshot at the start of the game
-        timeBetweenShots = fireRate;  
+        elasticLong.gameObject.SetActive(false);//hide elastics at the start of the game
+        elasticShort.gameObject.SetActive(false);//hide elastics at the start of the game
+        
+        timeBetweenShots = fireRate;
+
+        RenderSettings.fogDensity = fogDensity; //set fog density to 0.1f
+        RenderSettings.fogColor = fogColor; //change color to fog color
+        RenderSettings.fog = true; //enable fog in the lighting settings 
+        fog = true; //fog is on
     }
     
     private void Update()
@@ -77,8 +95,18 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             aimPlayer.gameObject.SetActive(true); //show player aim
-            if(canFire) playerSlingshot.gameObject.SetActive(true); //if player is aiming and can fire show slingshot
-            if (!canFire) playerSlingshot.gameObject.SetActive(false); //if player can't fire hide silnshot
+            playerSlingshot.gameObject.SetActive(true); //show slingshot
+            if (canFire)
+            {
+                elasticLong.gameObject.SetActive(true); //if player is aiming and can fire elastic charged is showing
+                elasticShort.gameObject.SetActive(false); //if player is aiming and can fire elastic short is hidden
+            }
+            if (!canFire)
+            {
+                elasticLong.gameObject.SetActive(false); //if player is aiming and can't fire elastic charged is hidden
+                elasticShort.gameObject.SetActive(true); //if player is aiming and can't fire elastic short is showing
+
+            }
             //when left button is pressed fire
             if (Input.GetMouseButtonDown(0) && canFire == true) //check if left button is pressed and if it has pass enough time since last shot 
             {
@@ -92,14 +120,16 @@ public class Player : MonoBehaviour
                 Instantiate(playerAmmo, slingshot.position, slingshot.rotation); //instatiate player shots
             }
         }
-        //when right button released hide aim
+        //when right button released hide aim and slingshot
         if (Input.GetMouseButtonUp(1))
         {
             aimPlayer.gameObject.SetActive(false);//hide aim when right button is released
             playerSlingshot.gameObject.SetActive(false); //hide player slingshot
+            elasticLong.gameObject.SetActive(false); //hide elastic
+            elasticShort.gameObject.SetActive(false); //hide elastic
         }
             
-        //conts the time between shots
+        //counts the time between shots
         if (!canFire)
         {
             timeBetweenShots -= Time.deltaTime; //countdown
@@ -161,6 +191,25 @@ public class Player : MonoBehaviour
         {
             //call game win scene 
         }
+        //player touches fog trigger- adapted from https://docs.unity3d.com/ScriptReference/RenderSettings.html
+        if (other.CompareTag("Fog"))
+        {
+            if (GameObject.FindGameObjectWithTag("Set").GetComponent<Geral>().gasReleased == false) //fog turns on if the poison has not been released, if gasreleased variable is false
+            { 
+                if (!fog) //fog is off let's turn it on 
+                {
+                    RenderSettings.fogDensity = fogDensity; //set fog density to 0.1f
+                    RenderSettings.fogColor = fogColor; //change color to fog color
+                    RenderSettings.fog = true; //enable fog in the lighting settings 
+                    fog = true; //fog is on
+                }
+                else if (fog) //fog is on let's turn it off
+                {
+                    RenderSettings.fog = false; //disable fog in the lighting settings 
+                    fog = false; //fog is off
+                }
+            }
+        }
     }
     //player collects items
     private void OnTriggerStay(Collider other)
@@ -189,7 +238,7 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.C))
             {
                 Destroy(other.gameObject); //destroy antidote game object- this destorys the poison shpere too because controlling the turning on and off is the antidote script that is in the antidote game object
-                antidotesOwned++; //add weapon part
+                antidotesOwned++; //add antidote
                 pickUpPrompt.gameObject.SetActive(false); //hide pick up prompt
                 if(antidotesOwned==antidotesNeeded)
                 {

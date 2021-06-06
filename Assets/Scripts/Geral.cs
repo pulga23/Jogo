@@ -16,24 +16,27 @@ public class Geral : MonoBehaviour
 
     [SerializeField]
     private float releaseGasTime = 30f; //when player has this time left gas is released to kill them  
-    private bool gasReleased = false; // variable to know if the gas has already been released
+    public bool gasReleased = false; // variable to know if the gas has already been released, public to acess it in player script 
 
     [SerializeField]
     private GameObject pauseScreen; // game object to stpre the pause screen
     private bool gamePaused = false; // variable to know if the game is paused
 
     bool fog = false; //variable to control if the fog is on or off
-    float fogDensity = 0.1f; // control fog density
-    //float poisonDensity = 0.1f; //control fog density when it is poison 
-    Color fogColor = new Color (0.5f, 0.5f, 0.5f, 1f); //variable color to keep the fog color for when we want to turn fog on
     Color poisonColor = new Color(0.7f, 0.5f, 0.3f, 1f); //variable colour to keep the color for the poison to be when released
     float poisonTime = 0f; //variable to count the tima that has passed since poison has been realesed
-    
+
+    [SerializeField]
+    GameObject debris;
+    [SerializeField]
+    Transform[] debrisCoordinates;// create empty game objects as coordinates and place in array
+    int debrisAmount = 5; //number of debris
     private void Start()
     {
         pauseScreen.gameObject.SetActive(false); //hides the pause screen 
         Time.timeScale = 1f; //start time
-        RenderSettings.fog = false; //fog off when game starts
+
+        //Instantiate(debris, debrisCoordinates.position, Quaternion.identity); //create a for cycle to instatiate each debris in postion 
     }
 
     void Update()
@@ -62,12 +65,6 @@ public class Geral : MonoBehaviour
             }
         }
         if (gasReleased) RealeasePoison(); //call method when the variable is true
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            if (fog) EndFog();
-            else if (!fog) StartFog();
-        }
-
     }
 
     //method to count and print to unity the time remaining
@@ -122,24 +119,8 @@ public class Geral : MonoBehaviour
         pauseScreen.gameObject.SetActive(false); // hides pause screen
         Time.timeScale = 1f; //time starts agaisn
     }
-
-    //method to "start" the fog - adapted from https://docs.unity3d.com/ScriptReference/RenderSettings.html
-    private void StartFog()
-    {
-        RenderSettings.fogDensity = fogDensity; //set fog density to 0.1f
-        RenderSettings.fogColor = fogColor; //change color to fog color
-        RenderSettings.fog = true; //enable fog in the lighting settings 
-        fog = true; //fog is on
-    }
-
-    //method to "end" the fog 
-    private void EndFog()
-    {
-        RenderSettings.fog = false; //disable fog in the lighting settings 
-        fog = false; //fog is off
-    }
-
-    //method to release the poison
+        
+    //method to release the poison - - adapted from https://docs.unity3d.com/ScriptReference/RenderSettings.html
     private void RealeasePoison()
     {
         gasReleased = true; //method start being called in update
