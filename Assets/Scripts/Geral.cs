@@ -26,21 +26,29 @@ public class Geral : MonoBehaviour
     Color poisonColor = new Color(0.7f, 0.5f, 0.3f, 1f); //variable colour to keep the color for the poison to be when released
     float poisonTime = 0f; //variable to count the tima that has passed since poison has been realesed
 
-    [SerializeField]
-    GameObject debris;
-    [SerializeField]
+    //[SerializeField]
+    //GameObject debris;
+    //[SerializeField]
     //Transform[] debrisCoordinates = new Transform[5];// create empty game objects as coordinates and place in array
     //int debrisAmount = 5; //number of debris
+    
+    [SerializeField]
+    Transform[] coordinatesWeaponParts = new Transform[5];
+    [SerializeField]
+    private GameObject weaponPart;
+    int firstPosition;
+    int secondPosition;
+    int thirdposition;
+    int partsInGame = 0;
     private void Start()
     {
         pauseScreen.gameObject.SetActive(false); //hides the pause screen 
         Time.timeScale = 1f; //start time
 
-        //for(int i=0; i==debrisAmount; i++) 
-        //{
-          //  Instantiate(debris, debrisCoordinates[i].position, Quaternion.identity); //instatiate each debris at start of the game 
-        //}
-        //Instantiate(debris, debrisCoordinates.position, Quaternion.identity); //create a for cycle to instatiate each debris in postion 
+        firstPosition = Random.Range(0, 5);
+        Instantiate(weaponPart, coordinatesWeaponParts[firstPosition].position, Quaternion.identity);//instatiate first weapon part
+        partsInGame++; //one part in game 
+        InstatiateWeaponPart();
     }
 
     void Update()
@@ -71,6 +79,31 @@ public class Geral : MonoBehaviour
         if (gasReleased) RealeasePoison(); //call method when the variable is true
     }
 
+    //method to instatiate weapon parts
+    private void InstatiateWeaponPart()
+    {
+        while(partsInGame < 3)//runs while less than 3 parts are in the game
+        {
+            if(partsInGame==1) //only one part in game, instatiate the second
+            {
+                secondPosition = Random.Range(0, 5);
+                if(secondPosition!=firstPosition) //second position diferent from first so we can instatiate
+                {
+                    Instantiate(weaponPart, coordinatesWeaponParts[secondPosition].position, Quaternion.identity);//instatiate second weapon part
+                    partsInGame++; //two weapon parts in game
+                }
+            }
+            if(partsInGame==2) //two parts in game, instatiate the thrid
+            {
+                thirdposition = Random.Range(0, 5);
+                if((thirdposition != firstPosition) && (thirdposition != secondPosition)) //3rd diferent from 1st and 2nd so instatiate
+                {
+                    Instantiate(weaponPart, coordinatesWeaponParts[thirdposition].position, Quaternion.identity);//instatiate third weapon part
+                    partsInGame++; //three weapon parts in game, all parts in game exit while
+                }
+            }
+        }
+    }
     //method to count and print to unity the time remaining
     //adapted from https://gamedevbeginner.com/how-to-make-countdown-timer-in-unity-minutes-seconds/
     private void CountAndPrintTime()
