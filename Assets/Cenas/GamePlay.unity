@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -3427,7 +3427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -35.5
+      value: -32.6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3435,7 +3435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -56.9
+      value: -32.8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11870,7 +11870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0172b583c92c14b84d07f9e0c547b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLeft: 300
+  timeLeft: 35
   timeText: {fileID: 1740220324}
   releaseGasTime: 30
   gasReleased: 0
@@ -19030,8 +19030,8 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 
 --- !u!222 &1740220325
@@ -22763,9 +22763,10 @@ GameObject:
   - component: {fileID: 2121406015}
   - component: {fileID: 2121406016}
   - component: {fileID: 2121406017}
+  - component: {fileID: 2121406018}
   m_Layer: 0
   m_Name: bipsMaquinaVeneno
-  m_TagString: Untagged
+  m_TagString: Bips
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22887,22 +22888,35 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121406014}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df0172b583c92c14b84d07f9e0c547b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeLeft: 300
-  timeText: {fileID: 0}
+  timeText: {fileID: 1740220324}
   releaseGasTime: 30
   gasReleased: 0
   coordinatesWeaponParts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  weaponPart: {fileID: 0}
+  - {fileID: 1405821109}
+  - {fileID: 1235981485}
+  - {fileID: 834811}
+  - {fileID: 969925639}
+  - {fileID: 1601128381}
+  weaponPart: {fileID: 3483005095131028334, guid: 83820fc21cedc1e4da546f0981d8dbd4,
+    type: 3}
+--- !u!114 &2121406018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121406014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f3f817878d0614bb2b51d621827b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2127413816
 GameObject:
   m_ObjectHideFlags: 0

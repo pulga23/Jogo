@@ -25,6 +25,7 @@ TagManager:
   - DocKidnap
   - ManBurning
   - HandsBloody
+  - Bips
   layers:
   - Default
   - TransparentFX

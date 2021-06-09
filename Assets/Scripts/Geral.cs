@@ -10,7 +10,7 @@ public class Geral : MonoBehaviour
     private float timeLeft = 300f; //time the character has to get through the game
     [SerializeField]
     private Text timeText; //time the player has left to show on screen
-    private bool timeRunning=true; //variable to make the time count stop when we want or when time is zero
+    private bool timeRunning = true; //variable to make the time count stop when we want or when time is zero
     private float minutes;
     private float seconds;
 
@@ -18,11 +18,11 @@ public class Geral : MonoBehaviour
     private float releaseGasTime = 30f; //when player has this time left gas is released to kill them  
     public bool gasReleased = false; // variable to know if the gas has already been released, public to acess it in player script 
 
-   /* [SerializeField]
-    private GameObject pauseScreen; // game object to stpre the pause screen
-    private bool gamePaused = false; // variable to know if the game is paused */
+   //[SerializeField]
+    //private GameObject pauseScreen; // game object to stpre the pause screen
+    //private bool gamePaused = false; // variable to know if the game is paused 
 
-    bool fog = false; //variable to control if the fog is on or off
+    //bool fog = false; //variable to control if the fog is on or off
     Color poisonColor = new Color(0.7f, 0.5f, 0.3f, 1f); //variable colour to keep the color for the poison to be when released
     float poisonTime = 0f; //variable to count the tima that has passed since poison has been realesed
 
@@ -41,12 +41,12 @@ public class Geral : MonoBehaviour
     int thirdposition;
     int partsInGame = 0;
 
-    AudioSource bipAudio;
+    //AudioSource bipAudio;
 
     private void Start()
     {
-       /* pauseScreen.gameObject.SetActive(false); //hides the pause screen 
-        Time.timeScale = 1f; //start time */
+       // pauseScreen.gameObject.SetActive(false); //hides the pause screen 
+        Time.timeScale = 1f; //start time 
 
         firstPosition = Random.Range(0, 5);
         Instantiate(weaponPart, coordinatesWeaponParts[firstPosition].position, Quaternion.identity);//instatiate first weapon part
@@ -168,8 +168,9 @@ public class Geral : MonoBehaviour
         {
 
             //bips life machine from john almost dying, activate after 5min
-            bipAudio = GetComponent<AudioSource>();
-            bipAudio.PlayDelayed(10f);
+            GameObject.FindGameObjectWithTag("Bips").GetComponent<Bips>().ActivateBips(); // call method to activate bips from bips script
+            //bipAudio = GetComponent<AudioSource>();
+            //bipAudio.PlayDelayed(10f);
             //https://www.youtube.com/watch?v=V6DX1XmSpeA; https://answers.unity.com/questions/290222/play-sound-on-fire-c.html
 
 
@@ -177,7 +178,7 @@ public class Geral : MonoBehaviour
             RenderSettings.fogDensity = 0.05f; //frist poison density
             RenderSettings.fogColor = poisonColor; //change color to poison color
             RenderSettings.fog = true; //enable fog in the lighting settings 
-            fog = true; //fog is enable in the settings
+            //fog = true; //fog is enable in the settings
         }
         else if (poisonTime >= 10f && poisonTime <=11) //second poison setting
         {
