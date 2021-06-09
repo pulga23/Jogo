@@ -18,9 +18,9 @@ public class Geral : MonoBehaviour
     private float releaseGasTime = 30f; //when player has this time left gas is released to kill them  
     public bool gasReleased = false; // variable to know if the gas has already been released, public to acess it in player script 
 
-    [SerializeField]
+   /* [SerializeField]
     private GameObject pauseScreen; // game object to stpre the pause screen
-    private bool gamePaused = false; // variable to know if the game is paused
+    private bool gamePaused = false; // variable to know if the game is paused */
 
     bool fog = false; //variable to control if the fog is on or off
     Color poisonColor = new Color(0.7f, 0.5f, 0.3f, 1f); //variable colour to keep the color for the poison to be when released
@@ -40,10 +40,13 @@ public class Geral : MonoBehaviour
     int secondPosition;
     int thirdposition;
     int partsInGame = 0;
+
+    AudioSource bipAudio;
+
     private void Start()
     {
-        pauseScreen.gameObject.SetActive(false); //hides the pause screen 
-        Time.timeScale = 1f; //start time
+       /* pauseScreen.gameObject.SetActive(false); //hides the pause screen 
+        Time.timeScale = 1f; //start time */
 
         firstPosition = Random.Range(0, 5);
         Instantiate(weaponPart, coordinatesWeaponParts[firstPosition].position, Quaternion.identity);//instatiate first weapon part
@@ -54,7 +57,7 @@ public class Geral : MonoBehaviour
     void Update()
     {
         CountAndPrintTime(); //calling method to cont and print to the scrren the time
-        if (Input.GetKeyDown(KeyCode.P)) //pause  or unpause the game
+        /*if (Input.GetKeyDown(KeyCode.P)) //pause  or unpause the game
         {
             if (gamePaused == false) //game is running, let's pause it
             {
@@ -75,7 +78,7 @@ public class Geral : MonoBehaviour
             {
                 Application.Quit();
             }
-        }
+        }*/
         if (gasReleased) RealeasePoison(); //call method when the variable is true
     }
 
@@ -141,7 +144,7 @@ public class Geral : MonoBehaviour
         SceneManager.LoadScene("GameOver"); //load game over scene
     }
 
-    //method to pause the game
+    /*method to pause the game
     private void PauseGame()
     {
         gamePaused = true; //game is now paused, so the variable is true
@@ -155,7 +158,7 @@ public class Geral : MonoBehaviour
         gamePaused = false; // game is not paused, so the variable is false
         pauseScreen.gameObject.SetActive(false); // hides pause screen
         Time.timeScale = 1f; //time starts agaisn
-    }
+    }*/
         
     //method to release the poison - - adapted from https://docs.unity3d.com/ScriptReference/RenderSettings.html
     private void RealeasePoison()
@@ -163,6 +166,14 @@ public class Geral : MonoBehaviour
         gasReleased = true; //method start being called in update
         if (poisonTime == 0) //first poison setting
         {
+
+            //bips life machine from john almost dying, activate after 5min
+            bipAudio = GetComponent<AudioSource>();
+            bipAudio.PlayDelayed(10f);
+            //https://www.youtube.com/watch?v=V6DX1XmSpeA; https://answers.unity.com/questions/290222/play-sound-on-fire-c.html
+
+
+
             RenderSettings.fogDensity = 0.05f; //frist poison density
             RenderSettings.fogColor = poisonColor; //change color to poison color
             RenderSettings.fog = true; //enable fog in the lighting settings 

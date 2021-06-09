@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -116,6 +117,10 @@ public class Player : MonoBehaviour
                 auxFire = slingshot.position;
                 auxFire.y++;
                 slingshot.position = auxFire; //increse by one the height of the shot
+                //SSOOUUUNNNDD shot fires - gets sound clip used in unity scene trough name of clip and audio source component
+                AudioSource audio = gameObject.AddComponent<AudioSource>();
+                audio.PlayOneShot((AudioClip)Resources.Load("disparo"));
+                //https://answers.unity.com/questions/290222/play-sound-on-fire-c.html
 
                 Instantiate(playerAmmo, slingshot.position, slingshot.rotation); //instatiate player shots
             }
@@ -190,6 +195,7 @@ public class Player : MonoBehaviour
         if(other.CompareTag("Exit"))
         {
             //call game win scene 
+            SceneManager.LoadScene("Victory");
         }
         //player touches fog trigger- adapted from https://docs.unity3d.com/ScriptReference/RenderSettings.html
         if (other.CompareTag("Fog"))

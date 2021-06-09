@@ -19,6 +19,12 @@ TagManager:
   - Antidote
   - PoisonRobot
   - Fog
+  - Button
+  - AmandaV1
+  - AmandaV2
+  - DocKidnap
+  - ManBurning
+  - HandsBloody
   layers:
   - Default
   - TransparentFX
