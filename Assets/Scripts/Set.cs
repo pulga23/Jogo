@@ -31,7 +31,7 @@ public class Set : MonoBehaviour
         TimeThePortal();
     }
     //method to rotate the set in 90degrees in the z axis, called in the player script when player triggers tag portalZaxis
-    public void ActivatePortalZAxis()
+    /*public void ActivatePortalZAxis()
     {
         playerPosition = player.transform.position; //get current FPS position
         auxPosition = labyrinthNormal.transform.position; //get labyrinth position
@@ -40,7 +40,7 @@ public class Set : MonoBehaviour
         labyrinthNormal.transform.rotation = Quaternion.Euler(0f, 0f, 90f); //rotate labyrinth in 90degrees in the Z axis
         Physics.gravity = new Vector3(0f, -4f, 0f); //change gravity 
         countPortalTime = true; //start counting time;
-    }
+    }*/
     //method to rotate the player 180 degrees, called in the player script when player triggers tag portal180
     public void ActivatePortal180()
     {

@@ -10,13 +10,19 @@ public class Geral : MonoBehaviour
     private float timeLeft = 300f; //time the character has to get through the game
     [SerializeField]
     private Text timeText; //time the player has left to show on screen
-    private bool timeRunning = true; //variable to make the time count stop when we want or when time is zero
+    private bool timeRunning = false; //variable to make the time count stop when we want or when time is zero
     private float minutes;
     private float seconds;
 
     [SerializeField]
     private float releaseGasTime = 30f; //when player has this time left gas is released to kill them  
     public bool gasReleased = false; // variable to know if the gas has already been released, public to acess it in player script 
+
+    [SerializeField]
+    float timeInRoom = 5f; //time the player is in the initial room before door opens and time starts
+    bool doorOpen = false; // door to the labyrinth is open or closed. time starts counting when door is open, set to true
+    [SerializeField]
+    GameObject doorIn; //game object of the door that opens to allow player to enter the labyrinth
 
    //[SerializeField]
     //private GameObject pauseScreen; // game object to stpre the pause screen
@@ -33,20 +39,21 @@ public class Geral : MonoBehaviour
     //int debrisAmount = 5; //number of debris
     
     [SerializeField]
-    Transform[] coordinatesWeaponParts = new Transform[5];
+    Transform[] coordinatesWeaponParts = new Transform[5]; //array of possible cordinates for weapon parts to appear
     [SerializeField]
     private GameObject weaponPart;
-    int firstPosition;
-    int secondPosition;
+    int firstPosition; // storing 1st position so it is not used again
+    int secondPosition; // storing 2nd position so it is not used again
     int thirdposition;
-    int partsInGame = 0;
+    int partsInGame = 0; //variable to control how many parts have been instatiated
 
     //AudioSource bipAudio;
 
     private void Start()
     {
        // pauseScreen.gameObject.SetActive(false); //hides the pause screen 
-        Time.timeScale = 1f; //start time 
+        Time.timeScale = 1f; //start time
+        doorIn.gameObject.SetActive(true);// door is closed
 
         firstPosition = Random.Range(0, 5);
         Instantiate(weaponPart, coordinatesWeaponParts[firstPosition].position, Quaternion.identity);//instatiate first weapon part
@@ -79,6 +86,7 @@ public class Geral : MonoBehaviour
                 Application.Quit();
             }
         }*/
+        if (!doorOpen) TimeInRoom(); //door isn't open call method to count the time
         if (gasReleased) RealeasePoison(); //call method when the variable is true
     }
 
@@ -193,5 +201,19 @@ public class Geral : MonoBehaviour
             RenderSettings.fogDensity = 0.15f; //fourth poison density, other settings remain the same 
         }
         poisonTime += Time.deltaTime; //count the time that is passing
+    }
+
+    //method to count the time in the intial room before labyrinth is opened
+    private void TimeInRoom()
+    {
+        timeInRoom -= Time.deltaTime; //countdown
+        
+        if(timeInRoom <= 0f) //time passed, open the labyrinth
+        {
+           
+            doorIn.gameObject.SetActive(false);//hide door player can go in
+            doorOpen = true;
+            timeRunning = true; //start counting the time
+        }
     }
 }

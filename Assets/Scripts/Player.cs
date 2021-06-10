@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float fireRate = 1f; //rate thst the player can fire at, time to reload
     private float timeBetweenShots;
+    [SerializeField]
     private bool playerHAsWeapon = false; //check if the player has all the parts and can use the weapon       
     private bool canFire = true; //player can fire if it's been more than fireRate seconds since last shot
     Transform slingshot; //where the shot comes from
@@ -47,7 +48,7 @@ public class Player : MonoBehaviour
     int antidotesOwned = 0;
 
     //FOG
-    private bool fog = true; //variable to control if the fog is on or off
+    private bool fog = false; //variable to control if the fog is on or off
     private float fogDensity = 0.1f; // control fog density
     private Color fogColor = new Color(0.5f, 0.5f, 0.5f, 1f); //variable color to keep the fog color for when we want to turn fog on adapted from https://docs.unity3d.com/ScriptReference/Color.html
 
@@ -64,10 +65,10 @@ public class Player : MonoBehaviour
         
         timeBetweenShots = fireRate;
 
-        RenderSettings.fogDensity = fogDensity; //set fog density to 0.1f
-        RenderSettings.fogColor = fogColor; //change color to fog color
-        RenderSettings.fog = true; //enable fog in the lighting settings 
-        fog = true; //fog is on
+        //RenderSettings.fogDensity = fogDensity; //set fog density to 0.1f
+        //RenderSettings.fogColor = fogColor; //change color to fog color
+        //RenderSettings.fog = true; //enable fog in the lighting settings 
+        //fog = true; //fog is on
     }
     
     private void Update()
@@ -164,10 +165,10 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject); //destroy health kit
         }
         //player touches a portal
-        if(other.CompareTag("PortalZAxis")) //portal that rotates 90 degrees in the Z axis
-        {
-            GameObject.FindGameObjectWithTag("Set").GetComponent<Set>().ActivatePortalZAxis(); //call method on Set script that activates the portal
-        }
+        //if(other.CompareTag("PortalZAxis")) //portal that rotates 90 degrees in the Z axis
+        //{
+          //  GameObject.FindGameObjectWithTag("Set").GetComponent<Set>().ActivatePortalZAxis(); //call method on Set script that activates the portal
+        //}
         if(other.CompareTag("Portal180")) //portal that rotates the player cam 180 degrees
         {
             GameObject.FindGameObjectWithTag("Set").GetComponent<Set>().ActivatePortal180(); //call method on Set script that activates the portal
@@ -215,6 +216,11 @@ public class Player : MonoBehaviour
                     fog = false; //fog is off
                 }
             }
+        }
+        //player falls jumping between room and labyrinth
+        if(other.CompareTag("Abyss"))
+        {
+            GameObject.FindGameObjectWithTag("Set").GetComponent<Geral>().GameOver(); //player dies immediately, start Game Over method 
         }
     }
     //player collects items
