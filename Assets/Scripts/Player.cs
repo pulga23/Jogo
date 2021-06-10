@@ -52,6 +52,9 @@ public class Player : MonoBehaviour
     private float fogDensity = 0.1f; // control fog density
     private Color fogColor = new Color(0.5f, 0.5f, 0.5f, 1f); //variable color to keep the fog color for when we want to turn fog on adapted from https://docs.unity3d.com/ScriptReference/Color.html
 
+    AudioSource audioS;
+    [SerializeField]
+    AudioClip shot;
 
     private void Start()
     {
@@ -64,6 +67,9 @@ public class Player : MonoBehaviour
         elasticShort.gameObject.SetActive(false);//hide elastics at the start of the game
         
         timeBetweenShots = fireRate;
+
+        audioS = gameObject.AddComponent<AudioSource>();
+        
 
         //RenderSettings.fogDensity = fogDensity; //set fog density to 0.1f
         //RenderSettings.fogColor = fogColor; //change color to fog color
@@ -120,8 +126,8 @@ public class Player : MonoBehaviour
                 auxFire.y++;
                 slingshot.position = auxFire; //increse by one the height of the shot
                 //SSOOUUUNNNDD shot fires - gets sound clip used in unity scene trough name of clip and audio source component
-                AudioSource audio = gameObject.AddComponent<AudioSource>();
-                audio.PlayOneShot((AudioClip)Resources.Load("disparo"));
+                //AudioSource audio = gameObject.AddComponent<AudioSource>();
+                audioS.PlayOneShot(shot, 1f);
                 //https://answers.unity.com/questions/290222/play-sound-on-fire-c.html
 
                 Instantiate(playerAmmo, slingshot.position, slingshot.rotation); //instatiate player shots
