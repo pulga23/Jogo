@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
 
     public void Iniciar(int gamePlay) //iniciar jogo atraves da cena nomeada pela RitaMarques
     {
-        SceneManager.LoadScene("gamePlay");
+        SceneManager.LoadScene("CutScene");
     }
 
     public void Options() //no main (opçoes), desaparece creditos e instruçoes
