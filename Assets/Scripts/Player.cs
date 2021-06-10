@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
         if(hasAntidote)
         {
             GameObject.FindGameObjectWithTag("DoorExit").SetActive(false);//hide exit game object so plater can escape the labyrinth
+            hasAntidote = false; //to spot from entering the if and tryig to hide object that's not there anymore
         }
        
     }
@@ -195,6 +196,7 @@ public class Player : MonoBehaviour
         //player reaches the exit zone
         if(other.CompareTag("Exit"))
         {
+            Debug.Log("Win");
             //call game win scene 
             SceneManager.LoadScene("Victory");
         }
